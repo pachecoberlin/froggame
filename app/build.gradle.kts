@@ -87,6 +87,7 @@ dependencies {
 
     implementation(project(":core-ui"))
     implementation(project(":feature-frogdata"))
+    implementation(project(":feature-catchFrog"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
