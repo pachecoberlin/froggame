@@ -65,6 +65,7 @@ android {
         buildConfig = false
         renderScript = false
         shaders = false
+        viewBinding=true
     }
 
     composeOptions {
@@ -79,6 +80,11 @@ android {
 }
 
 dependencies {
+    //catchFrog Deps
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.gridlayout)
+    implementation(libs.appcompat)
+
     implementation(project(":core-ui"))
     implementation(project(":feature-frogdata"))
 
