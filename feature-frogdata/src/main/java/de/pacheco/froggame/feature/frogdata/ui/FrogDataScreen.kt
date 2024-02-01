@@ -16,7 +16,7 @@
 
 package de.pacheco.froggame.feature.frogdata.ui
 
-import de.pacheco.froggame.core.ui.MyApplicationTheme
+import de.pacheco.froggame.core.ui.FrogMainTheme
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Success
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -82,7 +82,7 @@ internal fun FrogDataScreen(
 @Preview(showBackground = true)
 @Composable
 private fun DefaultPreview() {
-    MyApplicationTheme {
+    FrogMainTheme {
         FrogDataScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
 }
@@ -90,7 +90,7 @@ private fun DefaultPreview() {
 @Preview(showBackground = true, widthDp = 480)
 @Composable
 private fun PortraitPreview() {
-    MyApplicationTheme {
+    FrogMainTheme {
         FrogDataScreen(listOf("Compose", "Room", "Kotlin"), onSave = {})
     }
 }
