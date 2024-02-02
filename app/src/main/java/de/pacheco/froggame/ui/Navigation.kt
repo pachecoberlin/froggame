@@ -80,8 +80,8 @@ fun MainNavigation() {
             // TODO: We may want to add padding or spacer when the snackbar is shown so that
             //  content doesn't display behind it.
             NavHost(navController = navController, startDestination = "egal") {
-                composable("egal") { FrogDataScreen(modifier = Modifier.padding(16.dp), hint = "yes") }
-                composable(route = "catchFrogs") { CatchFrogScreen(modifier = Modifier.padding(0.dp)) }
+                composable("egal") { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
+                composable(route = "catchFrogs") { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
                 // TODO: Add more destinations
             }
         }
