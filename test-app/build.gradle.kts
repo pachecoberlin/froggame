@@ -50,10 +50,10 @@ android {
 }
 
 dependencies {
-    implementation(project(":app"))
-    implementation(project(":core-data"))
-    implementation(project(":core-testing"))
-    implementation(project(":feature-frogdata"))
+    implementation(projects.app)
+    implementation(projects.core.data)
+    implementation(projects.core.testing)
+    implementation(projects.feature.frogdata)
 
     // Testing
     implementation(libs.androidx.test.core)

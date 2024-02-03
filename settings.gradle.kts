@@ -28,13 +28,14 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "Multimodule template"
+rootProject.name = "FrogGame"
 
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
-include(":core-data")
-include(":core-database")
-include(":core-testing")
-include(":core-ui")
-include(":feature-frogdata")
+include(":core:data")
+include(":core:database")
+include(":core:testing")
+include(":core:ui")
+include(":feature:frogdata")
 include(":test-app")
-include(":feature-catchFrog")
+include(":feature:catchFrog")
