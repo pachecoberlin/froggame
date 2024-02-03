@@ -37,9 +37,9 @@ android {
 
 dependencies {
 
-    implementation(project(":core-data"))
-    implementation(project(":core-ui"))
-    androidTestImplementation(project(":core-testing"))
+    implementation(projects.core.data)
+    implementation(projects.core.ui)
+    androidTestImplementation(projects.core.testing)
     // Core Android dependencies
     implementation(libs.androidx.activity.compose)
 
