@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "de.pacheco.froggame.core.domain"
+    namespace = "de.pacheco.core.utils"
     compileSdk = 34
     defaultConfig {
         minSdk = 21
@@ -17,9 +17,6 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.data)
-    api(projects.core.utils)
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    implementation(libs.kotlinx.coroutines.android)
 }
