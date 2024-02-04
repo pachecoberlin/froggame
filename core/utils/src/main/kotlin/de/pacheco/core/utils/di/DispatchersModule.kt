@@ -1,8 +1,8 @@
-package de.pacheco.core.utils.network.di
+package de.pacheco.core.utils.di
 
-import de.pacheco.core.utils.network.Dispatcher
-import de.pacheco.core.utils.network.PachecoDispatchers.Default
-import de.pacheco.core.utils.network.PachecoDispatchers.IO
+import de.pacheco.core.utils.annotations.Dispatcher
+import de.pacheco.core.utils.annotations.CoroutineDispatchers.Default
+import de.pacheco.core.utils.annotations.CoroutineDispatchers.IO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
