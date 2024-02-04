@@ -19,31 +19,33 @@ package de.pacheco.froggame.feature.frogdata.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.pacheco.froggame.core.domain.AddFrogDataUseCase
+import de.pacheco.froggame.core.domain.GetFrogDataUseCase
+import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Error
+import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Loading
+import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Success
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import de.pacheco.froggame.core.data.FrogDataRepository
-import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Error
-import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Loading
-import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Success
 import javax.inject.Inject
 
 @HiltViewModel
 class FrogDataViewModel @Inject constructor(
-    private val frogDataRepository: FrogDataRepository
+    getFrogDataUseCase: GetFrogDataUseCase,
+    private val addFrogDataUseCase: AddFrogDataUseCase
 ) : ViewModel() {
 
-    val uiState: StateFlow<FrogDataUiState> = frogDataRepository
-        .frogDatas.map<List<String>, FrogDataUiState> { Success(data = it) }
+    val uiState: StateFlow<FrogDataUiState> = getFrogDataUseCase()
+        .map<List<String>, FrogDataUiState> { Success(data = it) }
         .catch { emit(Error(it)) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), Loading)
 
     fun addFrogData(name: String) {
         viewModelScope.launch {
-            frogDataRepository.add(name)
+            addFrogDataUseCase(name)
         }
     }
 }
