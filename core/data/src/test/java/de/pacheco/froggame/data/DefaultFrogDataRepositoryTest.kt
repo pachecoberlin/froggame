@@ -16,21 +16,19 @@
 
 package de.pacheco.froggame.data
 
-import kotlinx.coroutines.ExperimentalCoroutinesApi
+import de.pacheco.froggame.core.data.repos.DefaultFrogDataRepository
+import de.pacheco.froggame.core.database.FrogData
+import de.pacheco.froggame.core.database.FrogDataDao
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
-import de.pacheco.froggame.core.data.DefaultFrogDataRepository
-import de.pacheco.froggame.core.database.FrogData
-import de.pacheco.froggame.core.database.FrogDataDao
 
 /**
  * Unit tests for [DefaultFrogDataRepository].
  */
-@OptIn(ExperimentalCoroutinesApi::class) // TODO: Remove when stable
 class DefaultFrogDataRepositoryTest {
 
     @Test
@@ -39,7 +37,7 @@ class DefaultFrogDataRepositoryTest {
 
         repository.add("Repository")
 
-        assertEquals(repository.frogDatas.first().size, 1)
+        assertEquals(repository.frogDatas().first().size, 1)
     }
 
 }

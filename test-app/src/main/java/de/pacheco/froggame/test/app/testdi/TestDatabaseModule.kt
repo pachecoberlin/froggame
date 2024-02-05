@@ -20,9 +20,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent
 import dagger.hilt.testing.TestInstallIn
-import de.pacheco.froggame.core.data.FrogDataRepository
+import de.pacheco.froggame.core.data.repos.interfaces.IFrogDataRepository
 import de.pacheco.froggame.core.data.di.DataModule
-import de.pacheco.froggame.core.data.di.FakeFrogDataRepository
+import de.pacheco.froggame.core.data.repos.FakeFrogDataRepository
 
 @Module
 @TestInstallIn(
@@ -34,5 +34,5 @@ interface FakeDataModule {
     @Binds
     abstract fun bindRepository(
         fakeRepository: FakeFrogDataRepository
-    ): FrogDataRepository
+    ): IFrogDataRepository
 }

@@ -1,7 +1,7 @@
 package de.pacheco.feature.ui
 
 import androidx.lifecycle.ViewModel
-import de.pacheco.froggame.core.data.CatchFrogRepository
+import de.pacheco.froggame.core.data.repos.CatchFrogRepository
 import javax.inject.Inject
 
 class CatchFrogViewModel @Inject constructor(
