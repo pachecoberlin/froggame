@@ -45,6 +45,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.pacheco.feature.ui.CatchFrogScreen
+import de.pacheco.feature.ui.StartCatchFrogScreen
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
 
 @Composable
@@ -81,6 +82,7 @@ fun MainNavigation() {
             //  content doesn't display behind it.
             NavHost(navController = navController, startDestination = "egal") {
                 composable("egal") { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
+                composable(route = "startCatchFrogs") { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
                 composable(route = "catchFrogs") { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
                 // TODO: Add more destinations
             }
@@ -102,6 +104,12 @@ private fun MainBottomBar(
             label = { Text("egal") },
             selected = false,
             onClick = { navController.navigate("egal") }
+        )
+        NavigationBarItem(
+            icon = { Icon(Icons.Filled.PlayArrow, contentDescription = "start catch frogs") },
+            label = { Text("catch frogs") },
+            selected = false,
+            onClick = { navController.navigate("startCatchFrogs") }
         )
         NavigationBarItem(
             icon = { Icon(Icons.Filled.PlayArrow, contentDescription = "catch frogs") },

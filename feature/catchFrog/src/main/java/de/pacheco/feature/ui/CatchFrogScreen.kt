@@ -76,8 +76,6 @@ fun CatchableFrog() {
 
 private fun replay() {}
 
-// Previews
-
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
