@@ -9,5 +9,10 @@ import javax.inject.Inject
 class CatchFrogViewModel @Inject constructor(
     private val catchFrogRepository: CatchFrogRepository
 ) : ViewModel() {
- val wtf=7
+    val startGame: Pair<Function, (params: Map<Parameter, Any>) -> Unit> = Function.STARTGAME to {
+        //TODO navigate to catchFrogGameScreen and start the game
+        println("FROM ViewModel ${it[Parameter.ROWS]} ${it[Parameter.COLS]}")
+    }
+
+    val functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = mapOf(startGame)
 }
