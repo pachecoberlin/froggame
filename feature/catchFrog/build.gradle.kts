@@ -37,8 +37,8 @@ android {
 }
 
 dependencies {
-
     implementation(projects.core.data)
+    implementation(projects.core.ressources)
     implementation(projects.core.ui)
     androidTestImplementation(projects.core.testing)
     // Core Android dependencies
