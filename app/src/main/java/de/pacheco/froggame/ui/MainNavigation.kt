@@ -31,9 +31,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.pacheco.feature.ui.CatchFrogScreen
 import de.pacheco.feature.ui.StartCatchFrogScreen
-import de.pacheco.froggame.R.string.catchFrogs
-import de.pacheco.froggame.R.string.main
-import de.pacheco.froggame.R.string.startCatchFrogs
+import de.pacheco.froggame.core.ressources.R.string.catchFrogs
+import de.pacheco.froggame.core.ressources.R.string.main
+import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
 
 @Composable
@@ -80,7 +80,6 @@ fun MainNavigation() {
         }
     }
 }
-
 
 @Composable
 private fun MainBottomBar(

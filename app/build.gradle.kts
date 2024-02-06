@@ -85,6 +85,7 @@ dependencies {
     implementation(libs.androidx.gridlayout)
     implementation(libs.appcompat)
 
+    implementation(projects.core.ressources)
     implementation(projects.core.ui)
     implementation(projects.feature.frogdata)
     implementation(projects.feature.catchFrog)
