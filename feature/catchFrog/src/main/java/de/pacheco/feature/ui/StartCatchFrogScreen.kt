@@ -44,7 +44,6 @@ internal fun StartCatchFrogScreenInternal(
         .fillMaxWidth()
     val rows: MutableIntState = mutableIntStateOf(6)
     val cols: MutableIntState = mutableIntStateOf(6)
-//    val navigate = extendNavigation()
     val catchFrogs = stringResource(id = catchFrogs)
     Column(modifier = modifiedModifier) {
         OutlinedTextField(modifier = modifiedModifier, label = Parameter.ROWS.text, rows)
@@ -57,7 +56,7 @@ internal fun StartCatchFrogScreenInternal(
 }
 
 /**
- * TODO fix or delete
+ * TODO fix or delete would be used in StartCatchFrogScreenInternal and passed to startGame
  * This leads to CatchFrogScreen is shown on top of StartCatchFrogScreen
  */
 @Composable
