@@ -1,9 +1,14 @@
 package de.pacheco.feature.ui
 
-enum class Function(val text: String) {
-   STARTGAME("Start Game Now")
+import de.pacheco.froggame.core.ressources.R.string.columns
+import de.pacheco.froggame.core.ressources.R.string.rows
+import de.pacheco.froggame.core.ressources.R.string.startGameNow
+
+enum class Function(val text: Int) {
+    STARTGAME(startGameNow)
 }
-enum class Parameter(val text: String) {
-   ROWS("Rows"),
-   COLS("Columns")
+
+enum class Parameter(val text: Int) {
+    ROWS(rows),
+    COLS(columns)
 }

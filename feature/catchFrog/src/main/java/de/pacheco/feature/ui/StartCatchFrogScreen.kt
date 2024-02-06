@@ -46,11 +46,11 @@ internal fun StartCatchFrogScreenInternal(
     val cols: MutableIntState = mutableIntStateOf(6)
     val catchFrogs = stringResource(id = catchFrogs)
     Column(modifier = modifiedModifier) {
-        OutlinedTextField(modifier = modifiedModifier, label = Parameter.ROWS.text, rows)
-        OutlinedTextField(modifier = modifiedModifier, label = Parameter.COLS.text, cols)
+        OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.ROWS.text), rows)
+        OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.COLS.text), cols)
         Button(modifier = modifiedModifier, onClick = startGame(functions[Function.STARTGAME], rows, cols, navigateTo, catchFrogs)) {
             //TODO darktheme text color to bright
-            Text(text = Function.STARTGAME.text)
+            Text(text = stringResource(Function.STARTGAME.text))
         }
     }
 }
@@ -65,8 +65,8 @@ private fun extendNavigation(): () -> Unit {
     val catchFrogs = stringResource(id = catchFrogs)
     val startCatchFrogs = stringResource(id = startCatchFrogs)
     NavHost(navController = navController, startDestination = startCatchFrogs) {
-        navigation(startDestination = "omg", route = startCatchFrogs) {
-            composable(route = "omg") { /*This is empty so the startCatchFrogsScreen is shown and not build with a loop*/ }
+        navigation(startDestination = "anotherName", route = startCatchFrogs) {
+            composable(route = "anotherName") { /*This is empty so the startCatchFrogsScreen is shown and not build with a loop*/ }
             composable(route = catchFrogs) { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
         }
     }
