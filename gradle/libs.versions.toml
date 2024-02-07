@@ -1,8 +1,8 @@
 [versions]
 androidGradlePlugin = "8.2.2"
 androidxActivity = "1.8.2"
-androidxComposeBom = "2024.01.00"
-androidxComposeCompiler = "1.5.8"
+androidxComposeBom = "2024.02.00"
+androidxComposeCompiler = "1.5.9"
 androidxCore = "1.12.0"
 androidxCoreSplashscreen = "1.0.1"
 androidxHilt = "1.1.0"
@@ -24,7 +24,7 @@ espresso-core = "3.5.1"
 appcompat = "1.6.1"
 material = "1.11.0"
 appcompatResources = "1.6.1"
-annotation = "1.6.0"
+annotation = "1.7.1"
 org-jetbrains-kotlin-jvm = "1.9.22"
 
 [libraries]
