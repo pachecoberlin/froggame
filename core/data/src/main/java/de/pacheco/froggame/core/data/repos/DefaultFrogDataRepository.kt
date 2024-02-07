@@ -1,10 +1,10 @@
 package de.pacheco.froggame.core.data.repos
 
 import de.pacheco.froggame.core.data.repos.interfaces.IFrogDataRepository
+import de.pacheco.froggame.core.database.dao.FrogDataDao
+import de.pacheco.froggame.core.database.model.FrogData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import de.pacheco.froggame.core.database.FrogData
-import de.pacheco.froggame.core.database.FrogDataDao
 import javax.inject.Inject
 
 class DefaultFrogDataRepository @Inject constructor(

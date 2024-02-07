@@ -17,8 +17,8 @@
 package de.pacheco.froggame.data
 
 import de.pacheco.froggame.core.data.repos.DefaultFrogDataRepository
-import de.pacheco.froggame.core.database.FrogData
-import de.pacheco.froggame.core.database.FrogDataDao
+import de.pacheco.froggame.core.database.dao.FrogDataDao
+import de.pacheco.froggame.core.database.model.FrogData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
