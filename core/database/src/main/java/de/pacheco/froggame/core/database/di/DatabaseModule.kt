@@ -41,7 +41,7 @@ class DatabaseModule {
         return Room.databaseBuilder(
             appContext,
             AppDatabase::class.java,
-            "FrogData"
+            "FrogGameData"
         ).build()
     }
 }
