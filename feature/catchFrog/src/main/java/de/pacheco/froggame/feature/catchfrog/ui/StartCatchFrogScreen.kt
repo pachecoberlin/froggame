@@ -1,4 +1,4 @@
-package de.pacheco.feature.ui
+package de.pacheco.froggame.feature.catchfrog.ui
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Column
@@ -27,6 +27,7 @@ import de.pacheco.froggame.core.ressources.R.string.catchFrogs
 import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
+import de.pacheco.froggame.feature.catchfrog.ui.CatchFrogScreen
 
 @Composable
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel(), navigateTo: (String) -> Unit) {

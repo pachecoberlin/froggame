@@ -1,4 +1,4 @@
-package de.pacheco.feature.ui
+package de.pacheco.froggame.feature.catchfrog.ui
 
 import de.pacheco.froggame.core.ressources.R.string.columns
 import de.pacheco.froggame.core.ressources.R.string.rows

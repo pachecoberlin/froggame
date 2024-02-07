@@ -1,4 +1,4 @@
-package de.pacheco.feature.ui
+package de.pacheco.froggame.feature.catchfrog.ui
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,4 +1,4 @@
-package de.pacheco.feature.ui
+package de.pacheco.froggame.feature.catchfrog.ui
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState

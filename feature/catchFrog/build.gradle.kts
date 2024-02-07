@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "de.pacheco.feature.catchfrog"
+    namespace = "de.pacheco.froggame.feature.catchfrog"
     compileSdk = 34
 
     defaultConfig {
@@ -40,6 +40,7 @@ dependencies {
     implementation(projects.core.data)
     implementation(projects.core.ressources)
     implementation(projects.core.ui)
+    implementation(project(":core:domain"))
     androidTestImplementation(projects.core.testing)
     // Core Android dependencies
     implementation(libs.androidx.activity.compose)
@@ -58,11 +59,4 @@ dependencies {
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-//    implementation(libs.androidx.core.ktx)
-//    implementation(libs.appcompat)
-//    implementation(libs.material)
-//    testImplementation(libs.junit)
-//    androidTestImplementation(libs.androidx.test.ext.junit)
-//    androidTestImplementation(libs.espresso.core)
 }

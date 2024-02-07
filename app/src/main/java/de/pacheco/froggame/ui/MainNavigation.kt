@@ -29,8 +29,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.pacheco.feature.ui.CatchFrogScreen
-import de.pacheco.feature.ui.StartCatchFrogScreen
+import de.pacheco.froggame.feature.catchfrog.ui.CatchFrogScreen
+import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
 import de.pacheco.froggame.core.ressources.R.string.catchFrogs
 import de.pacheco.froggame.core.ressources.R.string.main
 import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
