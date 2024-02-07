@@ -8,6 +8,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import de.pacheco.froggame.core.database.AppDatabase
+import de.pacheco.froggame.core.database.dao.CatchFrogDao
 import de.pacheco.froggame.core.database.dao.FrogDataDao
 import javax.inject.Singleton
 
@@ -27,5 +28,9 @@ class DatabaseModule {
     @Provides
     fun provideFrogDataDao(appDatabase: AppDatabase): FrogDataDao {
         return appDatabase.frogDataDao()
+    }
+    @Provides
+    fun provideCatchFrogDao(appDatabase: AppDatabase): CatchFrogDao {
+        return appDatabase.catchFrogDao()
     }
 }
