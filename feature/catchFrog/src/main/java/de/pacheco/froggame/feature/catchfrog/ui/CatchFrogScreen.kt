@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -72,7 +73,7 @@ private fun CatchableFrogsRows(rows: Int) {
 
 @Composable
 fun CatchableFrog() {
-    Image(painter = painterResource(id = R.drawable.frog), contentDescription = "a frog to catch")
+    Image(modifier=Modifier.alpha(0f),painter = painterResource(id = R.drawable.frog), contentDescription = "a frog to catch")
 }
 
 private fun replay() {}
