@@ -14,12 +14,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import de.pacheco.froggame.core.ressources.R
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
 
 @Composable
-fun CatchFrogScreen(modifier: Modifier = Modifier) {
+fun CatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel(),) {
     CatchFrogScreen(
         6 to 6,
         modifier = modifier
@@ -80,6 +81,6 @@ private fun replay() {}
 @Composable
 private fun DefaultPreview() {
     FrogMainTheme {
-        CatchFrogScreen()
+        CatchFrogScreen(size = 6 to 6)
     }
 }

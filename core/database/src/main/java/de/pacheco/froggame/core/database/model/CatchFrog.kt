@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class CatchFrog(
     @PrimaryKey(autoGenerate = true)
-    val uid: Int = 0,
+    val uid: Long = 0,
     val amount: Int,
+    val highscore: Int,
 )

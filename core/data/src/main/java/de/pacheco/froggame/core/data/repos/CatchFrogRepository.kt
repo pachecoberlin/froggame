@@ -2,16 +2,17 @@ package de.pacheco.froggame.core.data.repos
 
 import de.pacheco.froggame.core.data.repos.interfaces.ICatchFrogRepository
 import de.pacheco.froggame.core.database.dao.CatchFrogDao
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
+import de.pacheco.froggame.core.database.model.CatchFrog
 import javax.inject.Inject
 
 class CatchFrogRepository @Inject constructor(private val catchFrogDao: CatchFrogDao) : ICatchFrogRepository {
-    override fun startGame(numberOfFrogs: Int): Flow<List<Int>> {
-        return catchFrogDao.getCatchFrog().map { it.map { it.amount } }
+    override suspend fun startGame(numberOfFrogs: Int): Int {
+        val catchFrog = catchFrogDao.getHighScoreByAmount(numberOfFrogs) ?: CatchFrog(amount = numberOfFrogs, highscore = 0)
+        val uid = catchFrogDao.addCatchFrog(catchFrog)
+        return catchFrog.highscore
     }
 
-    override fun stopGame() {
+    override fun stopGame(highscore: Int) {
 //        TODO("Not yet implemented")
     }
 
