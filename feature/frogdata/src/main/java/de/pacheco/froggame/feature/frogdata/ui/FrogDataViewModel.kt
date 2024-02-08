@@ -51,7 +51,7 @@ class FrogDataViewModel @Inject constructor(
 }
 
 sealed interface FrogDataUiState {
-    object Loading : FrogDataUiState
+    data object Loading : FrogDataUiState
     data class Error(val throwable: Throwable) : FrogDataUiState
     data class Success(val data: List<String>) : FrogDataUiState
 }
