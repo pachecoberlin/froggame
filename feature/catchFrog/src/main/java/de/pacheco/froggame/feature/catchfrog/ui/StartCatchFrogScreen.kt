@@ -75,7 +75,7 @@ private fun extendNavigation(): () -> Unit {
 }
 
 fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableIntState, cols: MutableIntState, navigateTo: (String) -> Unit, catchFrogs: String): () -> Unit = {
-    function?.invoke(mapOf(Parameter.ROWS to rows, Parameter.COLS to cols))
+    function?.invoke(mapOf(Parameter.ROWS to rows.value, Parameter.COLS to cols.value))
     navigateTo(catchFrogs)
 }
 
