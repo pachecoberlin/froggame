@@ -3,7 +3,7 @@ package de.pacheco.froggame.feature.catchfrog.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.pacheco.froggame.core.domain.StartGameUseCase
+import de.pacheco.froggame.core.domain.usecases.StartGameUseCase
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

@@ -1,4 +1,4 @@
-package de.pacheco.froggame.core.domain
+package de.pacheco.froggame.core.domain.usecases
 
 import de.pacheco.core.utils.annotations.Dispatcher
 import de.pacheco.core.utils.annotations.CoroutineDispatchers

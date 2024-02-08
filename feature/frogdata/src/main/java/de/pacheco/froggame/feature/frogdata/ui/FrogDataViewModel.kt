@@ -19,8 +19,8 @@ package de.pacheco.froggame.feature.frogdata.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import de.pacheco.froggame.core.domain.AddFrogDataUseCase
-import de.pacheco.froggame.core.domain.GetFrogDataUseCase
+import de.pacheco.froggame.core.domain.usecases.AddFrogDataUseCase
+import de.pacheco.froggame.core.domain.usecases.GetFrogDataUseCase
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Error
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Loading
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataUiState.Success

@@ -1,4 +1,4 @@
-package de.pacheco.froggame.core.domain
+package de.pacheco.froggame.core.domain.usecases
 
 import de.pacheco.froggame.core.data.repos.interfaces.IFrogDataRepository
 import kotlinx.coroutines.flow.Flow

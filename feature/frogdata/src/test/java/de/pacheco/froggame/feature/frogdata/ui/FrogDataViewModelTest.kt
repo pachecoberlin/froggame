@@ -1,8 +1,8 @@
 package de.pacheco.froggame.feature.frogdata.ui
 
 import de.pacheco.froggame.core.data.repos.FakeFrogDataRepository
-import de.pacheco.froggame.core.domain.AddFrogDataUseCase
-import de.pacheco.froggame.core.domain.GetFrogDataUseCase
+import de.pacheco.froggame.core.domain.usecases.AddFrogDataUseCase
+import de.pacheco.froggame.core.domain.usecases.GetFrogDataUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
