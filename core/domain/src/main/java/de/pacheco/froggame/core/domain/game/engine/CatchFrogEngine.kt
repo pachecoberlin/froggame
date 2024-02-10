@@ -22,7 +22,6 @@ class CatchFrogEngine @Inject constructor(private val catchFrogRepository: ICatc
         }
     }
 
-
     override suspend fun startGame(frogCount: Int) {
         isStopped = false
         this.frogCount = frogCount
