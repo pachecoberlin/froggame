@@ -19,19 +19,25 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.navigation
-import androidx.navigation.compose.rememberNavController
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.pacheco.froggame.core.ressources.R.string.catchFrogs
-import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
-import de.pacheco.froggame.feature.catchfrog.ui.CatchFrogScreen
 
 @Composable
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel(), navigateTo: (String) -> Unit) {
-    StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions, navigateTo = navigateTo)
+    val gameState = viewModel.gameState.collectAsStateWithLifecycle()
+    println(gameState.value)
+    when (gameState.value) {
+        CatchFrogState.Preparation -> {
+            StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions, navigateTo = navigateTo)
+        }
+
+        else -> {
+            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState)
+        }
+    }
+
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -59,24 +65,25 @@ internal fun StartCatchFrogScreenInternal(
 /**
  * TODO fix or delete would be used in StartCatchFrogScreenInternal and passed to startGame
  * This leads to CatchFrogScreen is shown on top of StartCatchFrogScreen
+ * It should be implemented in that way that each feature has its own function which returns a composable. Need to figure out how NIA handles the route.
  */
-@Composable
-private fun extendNavigation(): () -> Unit {
-    val navController = rememberNavController()
-    val catchFrogs = stringResource(id = catchFrogs)
-    val startCatchFrogs = stringResource(id = startCatchFrogs)
-    NavHost(navController = navController, startDestination = startCatchFrogs) {
-        navigation(startDestination = "anotherName", route = startCatchFrogs) {
-            composable(route = "anotherName") { /*This is empty so the startCatchFrogsScreen is shown and not build with a loop*/ }
-            composable(route = catchFrogs) { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
-        }
-    }
-    return { navController.navigate(catchFrogs) }
-}
+//@Composable
+//private fun extendNavigation(): () -> Unit {
+//    val navController = rememberNavController()
+//    val catchFrogs = stringResource(id = catchFrogs)
+//    val startCatchFrogs = stringResource(id = startCatchFrogs)
+//    NavHost(navController = navController, startDestination = startCatchFrogs) {
+//        navigation(startDestination = "anotherName", route = startCatchFrogs) {
+//            composable(route = "anotherName") { /*This is empty so the startCatchFrogsScreen is shown and not build with a loop*/ }
+//            composable(route = catchFrogs) { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
+//        }
+//    }
+//    return { navController.navigate(catchFrogs) }
+//}
 
 fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableIntState, cols: MutableIntState, navigateTo: (String) -> Unit, catchFrogs: String): () -> Unit = {
-    function?.invoke(mapOf(Parameter.ROWS to rows.value, Parameter.COLS to cols.value))
-    navigateTo(catchFrogs)
+    function?.invoke(mapOf(Parameter.ROWS to rows.intValue, Parameter.COLS to cols.intValue))
+//    navigateTo(catchFrogs)
 }
 
 @Composable

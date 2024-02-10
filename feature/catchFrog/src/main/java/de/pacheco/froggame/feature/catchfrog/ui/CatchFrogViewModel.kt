@@ -17,20 +17,31 @@ class CatchFrogViewModel @Inject constructor(
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase
 ) : ViewModel() {
+    var rows: Int = 0
+    var cols: Int = 0
 
     private val startGame: Pair<Function, (params: Map<Parameter, Any>) -> Unit> = Function.STARTGAME to { params ->
-        viewModelScope.launch { startCatchFrogUseCase(params[Parameter.ROWS] as? Int ?: 1, params[Parameter.COLS] as? Int ?: 1) }
+        rows = params[Parameter.ROWS] as? Int ?: 1
+        cols = params[Parameter.COLS] as? Int ?: 1
+        viewModelScope.launch { startCatchFrogUseCase(rows * cols) }
     }
 
     val functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = mapOf(startGame)
 
-    val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase().map { if (it == -1) CatchFrogState.GameOver else CatchFrogState.Running(it) }.stateIn(
-        viewModelScope, SharingStarted
-            .WhileSubscribed(5000), CatchFrogState.Running(0)
-    )
+    val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase()
+        .map {
+            when (it) {
+                -2 -> CatchFrogState.Preparation
+                -1 -> CatchFrogState.GameOver
+                else -> CatchFrogState.Running(it)
+            }
+        }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatchFrogState.Preparation)
 }
+
 
 sealed interface CatchFrogState {
     data class Running(val frogIsShowing: Int) : CatchFrogState
     data object GameOver : CatchFrogState
+    data object Preparation : CatchFrogState
 }

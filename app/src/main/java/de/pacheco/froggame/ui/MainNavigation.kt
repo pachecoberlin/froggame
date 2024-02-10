@@ -29,11 +29,9 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.pacheco.froggame.feature.catchfrog.ui.CatchFrogScreen
-import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
-import de.pacheco.froggame.core.ressources.R.string.catchFrogs
 import de.pacheco.froggame.core.ressources.R.string.main
 import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
+import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
 
 @Composable
@@ -66,7 +64,6 @@ fun MainNavigation() {
                     ),
                 ),
         ) {
-            val catchFrogs = stringResource(catchFrogs)
             val main = stringResource(main)
             val startCatchFrogs = stringResource(startCatchFrogs)
             // TODO: We may want to add padding or spacer when the snackbar is shown so that
@@ -74,7 +71,6 @@ fun MainNavigation() {
             NavHost(navController = navController, startDestination = main) {
                 composable(main) { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
                 composable(route = startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) { route -> navController.navigate(route) } }
-                composable(route = catchFrogs) { CatchFrogScreen(modifier = Modifier.padding(20.dp)) }
                 // TODO: Add more destinations
             }
         }
@@ -89,7 +85,6 @@ private fun MainBottomBar(
     NavigationBar(
         modifier = modifier,
     ) {
-        val catchFrogsScreen = stringResource(catchFrogs)
         val main = stringResource(main)
         val startCatchFrogs = stringResource(startCatchFrogs)
         NavigationBarItem(
@@ -103,12 +98,6 @@ private fun MainBottomBar(
             label = { Text("catch frogs") },
             selected = false,
             onClick = { navController.navigate(startCatchFrogs) }
-        )
-        NavigationBarItem(
-            icon = { Icon(Icons.Filled.PlayArrow, contentDescription = "catch frogs") },
-            label = { Text("catch frogs") },
-            selected = false,
-            onClick = { navController.navigate(catchFrogsScreen) }
         )
     }
 }

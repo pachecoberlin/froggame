@@ -11,34 +11,20 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.pacheco.froggame.core.ressources.R
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
-fun CatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
-    val catchFrogState by viewModel.gameState.collectAsStateWithLifecycle()
-    catchFrogState.let { println(it) }
-    CatchFrogScreen(
-        6 to 6, //TODO get amount of frogs or rows and columns better the amount of frogs. then also change startCatchFrogScreen
-        modifier = modifier,
-        state = catchFrogState
-    )
-}
-
-@Composable
-internal fun CatchFrogScreen(
-    size: Pair<Int, Int>,
-    modifier: Modifier = Modifier,
-    state: CatchFrogState
-) {
+fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: State<CatchFrogState>) {
     Column(modifier.verticalScroll(state = ScrollState(0))) {
         Row(modifier) {
             Text(text = "Time", modifier = modifier)
@@ -47,7 +33,10 @@ internal fun CatchFrogScreen(
                 Text(text = "play again")
             }
         }
-        CatchFrogsMatrix(columns = size.first, rows = size.second, state)
+        CatchFrogsMatrix(
+            columns = size.first, rows = size.second,
+//            state
+        )
         Row(modifier = modifier.padding(bottom = 30.dp)) {
             Text(text = "Score: 0")
             Column(Modifier.weight(1f)) {}
@@ -57,7 +46,10 @@ internal fun CatchFrogScreen(
 }
 
 @Composable
-private fun CatchFrogsMatrix(columns: Int, rows: Int, state: CatchFrogState) {
+private fun CatchFrogsMatrix(
+    columns: Int, rows: Int,
+//                             state: CatchFrogState
+) {
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         for (i in 0..<columns) {
             Column {
@@ -82,12 +74,14 @@ fun CatchableFrog() {
     Image(modifier = Modifier.alpha(0f), painter = painterResource(id = R.drawable.frog), contentDescription = "a frog to catch")
 }
 
-private fun replay() {}
+private fun replay() {
+    //TODO
+}
 
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
     FrogMainTheme {
-        CatchFrogScreen(size = 6 to 6, state = CatchFrogState.Running(0))
+        CatchFrogScreen(size = 6 to 6, state = MutableStateFlow(CatchFrogState.Running(2)).asStateFlow().collectAsState())
     }
 }
