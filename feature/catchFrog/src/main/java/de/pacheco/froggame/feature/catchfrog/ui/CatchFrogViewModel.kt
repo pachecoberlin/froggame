@@ -17,6 +17,12 @@ class CatchFrogViewModel @Inject constructor(
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase
 ) : ViewModel() {
+    val caught: (Int) -> Unit = { catchedFrog ->
+        viewModelScope.launch {
+            println(catchedFrog) //TODO implement
+        }
+    }
+
     var rows: Int = 0
     var cols: Int = 0
 

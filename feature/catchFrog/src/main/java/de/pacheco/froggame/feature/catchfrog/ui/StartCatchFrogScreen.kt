@@ -20,21 +20,19 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import de.pacheco.froggame.core.ressources.R.string.catchFrogs
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
 
 @Composable
-fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel(), navigateTo: (String) -> Unit) {
+fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
     val gameState = viewModel.gameState.collectAsStateWithLifecycle()
-    println(gameState.value)
     when (gameState.value) {
         CatchFrogState.Preparation -> {
-            StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions, navigateTo = navigateTo)
+            StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions)
         }
 
         else -> {
-            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState)
+            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState, viewModel.caught)
         }
     }
 
@@ -42,20 +40,17 @@ fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogView
 
 @SuppressLint("UnrememberedMutableState")
 @Composable
-internal fun StartCatchFrogScreenInternal(
-    modifier: Modifier = Modifier, functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = emptyMap(), navigateTo: (String) ->
-    Unit
-) {
+internal fun StartCatchFrogScreenInternal(modifier: Modifier = Modifier, functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = emptyMap()) {
     val modifiedModifier = modifier
         .padding(all = 30.dp)
         .fillMaxWidth()
+    //TODO row sand cols one up and pass it to catchfrogscreen directly
     val rows: MutableIntState = mutableIntStateOf(6)
     val cols: MutableIntState = mutableIntStateOf(6)
-    val catchFrogs = stringResource(id = catchFrogs)
     Column(modifier = modifiedModifier) {
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.ROWS.text), rows)
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.COLS.text), cols)
-        Button(modifier = modifiedModifier, onClick = startGame(functions[Function.STARTGAME], rows, cols, navigateTo, catchFrogs)) {
+        Button(modifier = modifiedModifier, onClick = startGame(functions[Function.STARTGAME], rows, cols)) {
             //TODO darktheme text color to bright
             Text(text = stringResource(Function.STARTGAME.text))
         }
@@ -81,9 +76,8 @@ internal fun StartCatchFrogScreenInternal(
 //    return { navController.navigate(catchFrogs) }
 //}
 
-fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableIntState, cols: MutableIntState, navigateTo: (String) -> Unit, catchFrogs: String): () -> Unit = {
+fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableIntState, cols: MutableIntState): () -> Unit = {
     function?.invoke(mapOf(Parameter.ROWS to rows.intValue, Parameter.COLS to cols.intValue))
-//    navigateTo(catchFrogs)
 }
 
 @Composable
@@ -103,6 +97,6 @@ fun OutlinedTextField(modifier: Modifier = Modifier, label: String = "", mutable
 @Composable
 private fun DefaultPreview() {
     FrogMainTheme {
-        StartCatchFrogScreenInternal(navigateTo = { })
+        StartCatchFrogScreenInternal()
     }
 }

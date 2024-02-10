@@ -70,7 +70,7 @@ fun MainNavigation() {
             //  content doesn't display behind it.
             NavHost(navController = navController, startDestination = main) {
                 composable(main) { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
-                composable(route = startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) { route -> navController.navigate(route) } }
+                composable(route = startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
                 // TODO: Add more destinations
             }
         }
