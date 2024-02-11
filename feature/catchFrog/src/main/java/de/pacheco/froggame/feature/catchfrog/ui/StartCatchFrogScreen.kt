@@ -26,13 +26,14 @@ import de.pacheco.froggame.core.ui.FrogMainTheme
 @Composable
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
     val gameState = viewModel.gameState.collectAsStateWithLifecycle()
+    val score = viewModel.score.collectAsStateWithLifecycle()
     when (gameState.value) {
         CatchFrogState.Preparation -> {
             StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions)
         }
 
         else -> {
-            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState, viewModel.caughtFrog)
+            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState, viewModel::caughtFrog, score.value)
         }
     }
 
@@ -45,8 +46,8 @@ internal fun StartCatchFrogScreenInternal(modifier: Modifier = Modifier, functio
         .padding(all = 30.dp)
         .fillMaxWidth()
     //TODO row sand cols one up and pass it to catchfrogscreen directly
-    val rows: MutableIntState = mutableIntStateOf(4)
-    val cols: MutableIntState = mutableIntStateOf(6)
+    val rows: MutableIntState = mutableIntStateOf(6)
+    val cols: MutableIntState = mutableIntStateOf(4)
     Column(modifier = modifiedModifier) {
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.ROWS.text), rows)
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.COLS.text), cols)

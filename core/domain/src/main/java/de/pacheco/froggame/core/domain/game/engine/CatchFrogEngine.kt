@@ -21,6 +21,10 @@ class CatchFrogEngine @Inject constructor() : ICatchFrogEngine {
         _actualScore.update { score -> score + points }
     }
 
+    fun setScore(points: Int) {
+        _actualScore.update { points }
+    }
+
     private val _isStopped = MutableStateFlow(true)
     private val isStopped: StateFlow<Boolean> = _isStopped.asStateFlow()
 
@@ -39,6 +43,7 @@ class CatchFrogEngine @Inject constructor() : ICatchFrogEngine {
     override val isRunning: Flow<Boolean> = isStopped.map { !it }
 
     override suspend fun startGame(frogCount: Int, timeInSeconds: Int) {
+        setScore(0)
         stop(false)
         this.frogCount = frogCount
         delay(timeInSeconds * 1000L)

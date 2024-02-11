@@ -26,7 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
-fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: State<CatchFrogState>, caught: (Int) -> Unit) {
+fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: State<CatchFrogState>, caught: (Int) -> Unit, score: Int) {
     Column(modifier.verticalScroll(state = ScrollState(0))) {
         Row(modifier) {
             Text(text = "Time", modifier = modifier)
@@ -37,7 +37,7 @@ fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: 
         }
         CatchFrogsMatrix(columns = size.first, rows = size.second, state, caught)
         Row(modifier = modifier.padding(bottom = 30.dp)) {
-            Text(text = "Score: 0")
+            Text(text = "Score: $score")
             Column(Modifier.weight(1f)) {}
             Text(text = "HighScore: 0", modifier = Modifier.padding(start = 10.dp))
         }
@@ -46,12 +46,12 @@ fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: 
 
 @Composable
 private fun CatchFrogsMatrix(columns: Int, rows: Int, state: State<CatchFrogState>, caught: (Int) -> Unit) {
-    val showNumber = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing / columns else -1
+    val frogId = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing / columns else -1
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Column(Modifier.weight(1f)) {}
         for (i in 0..<columns) {
             Column {
-                CatchableFrogsRows(rows, if (i == showNumber) showNumber else -1, caught)
+                CatchableFrogsRows(rows, if (i == frogId) frogId else -1, caught, frogId)
             }
             Column(Modifier.weight(1f)) {}
         }
@@ -59,10 +59,10 @@ private fun CatchFrogsMatrix(columns: Int, rows: Int, state: State<CatchFrogStat
 }
 
 @Composable
-private fun CatchableFrogsRows(rows: Int, showing: Int, caught: (Int) -> Unit) {
+private fun CatchableFrogsRows(rows: Int, showing: Int, caught: (Int) -> Unit, frogId: Int) {
     for (i in 0..<rows) {
         Row {
-            CatchableFrog(i == showing, caught, i)
+            CatchableFrog(i == showing, caught, frogId)
         }
     }
 }
@@ -91,7 +91,9 @@ private fun replay() {
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
+    val score = 345
+    val state = MutableStateFlow(CatchFrogState.Running(2)).asStateFlow().collectAsState()
     FrogMainTheme {
-        CatchFrogScreen(size = 6 to 6, state = MutableStateFlow(CatchFrogState.Running(2)).asStateFlow().collectAsState(), caught = { })
+        CatchFrogScreen(size = 6 to 6, state = state, caught = { }, score = score)
     }
 }
