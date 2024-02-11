@@ -48,6 +48,7 @@ fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: 
 private fun CatchFrogsMatrix(columns: Int, rows: Int, state: State<CatchFrogState>, caught: (Int) -> Unit) {
     val showNumber = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing / columns else -1
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+        Column(Modifier.weight(1f)) {}
         for (i in 0..<columns) {
             Column {
                 CatchableFrogsRows(rows, if (i == showNumber) showNumber else -1, caught)

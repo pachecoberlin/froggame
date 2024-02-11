@@ -45,7 +45,7 @@ internal fun StartCatchFrogScreenInternal(modifier: Modifier = Modifier, functio
         .padding(all = 30.dp)
         .fillMaxWidth()
     //TODO row sand cols one up and pass it to catchfrogscreen directly
-    val rows: MutableIntState = mutableIntStateOf(6)
+    val rows: MutableIntState = mutableIntStateOf(4)
     val cols: MutableIntState = mutableIntStateOf(6)
     Column(modifier = modifiedModifier) {
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.ROWS.text), rows)

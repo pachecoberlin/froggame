@@ -4,11 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.pacheco.froggame.core.domain.usecases.CatchFrogUseCase
+import de.pacheco.froggame.core.domain.usecases.GetCatchFrogShowingUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class CatchFrogViewModel @Inject constructor(
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase,
+    getCatchFrogShowingUseCase: GetCatchFrogShowingUseCase,
     catchFrogUseCase: CatchFrogUseCase,
 ) : ViewModel() {
     val caughtFrog: (Int) -> Unit = { catchedFrog ->
@@ -36,14 +38,12 @@ class CatchFrogViewModel @Inject constructor(
 
     val functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = mapOf(startGame)
 
-    val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase()
-        .map {
-            when (it) {
-                -2 -> CatchFrogState.Preparation
-                -1 -> CatchFrogState.GameOver
-                else -> CatchFrogState.Running(it)
-            }
+    val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase().combine(getCatchFrogShowingUseCase()) { isRunning, frogShown ->
+        when (isRunning) {
+            true -> CatchFrogState.Running(frogShown)
+            else -> CatchFrogState.Preparation
         }
+    }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatchFrogState.Preparation)
 }
 
