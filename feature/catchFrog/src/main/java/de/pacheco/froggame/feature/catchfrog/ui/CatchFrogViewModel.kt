@@ -10,7 +10,7 @@ import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.combineTransform
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -24,28 +24,41 @@ class CatchFrogViewModel @Inject constructor(
     getCatchFrogScore: GetCatchFrogScore,
 ) : ViewModel() {
 
-    fun caughtFrog(caughtFrog:Int) {
+    fun caughtFrog(caughtFrog: Int) {
         viewModelScope.launch {
             catchFrogUseCase(caughtFrog)
         }
     }
 
-    var rows: Int = 0
-    var cols: Int = 0
+    private var oldValue: CatchFrogState = CatchFrogState.Preparation
+    var rows: Int = -1
+    var cols: Int = -1
 
     private val startGame: Pair<Function, (params: Map<Parameter, Any>) -> Unit> = Function.STARTGAME to { params ->
         rows = params[Parameter.ROWS] as? Int ?: 1
         cols = params[Parameter.COLS] as? Int ?: 1
+        startGame(rows,cols)
+    }
+
+    fun startGame(rows: Int, cols: Int) {
         viewModelScope.launch { startCatchFrogUseCase(rows * cols) }
     }
 
     val functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = mapOf(startGame)
 
     val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase()
-        .combine(getCatchFrogShowingUseCase()) { isRunning, frogShown ->
-            when (isRunning) {
-                true -> CatchFrogState.Running(frogShown)
-                else -> CatchFrogState.Preparation
+        .combineTransform(getCatchFrogShowingUseCase()) { isRunning, frogShown ->
+            if (isRunning) {
+                oldValue = CatchFrogState.Running(frogShown)
+                emit(oldValue)
+            } else {
+                if (oldValue is CatchFrogState.Running) {
+                    oldValue = CatchFrogState.GameOver
+                    emit(oldValue)
+                } else {
+                    oldValue = CatchFrogState.Preparation
+                    emit(oldValue)
+                }
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatchFrogState.Preparation)

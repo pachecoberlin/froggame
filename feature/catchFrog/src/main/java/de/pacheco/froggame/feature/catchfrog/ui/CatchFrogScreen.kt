@@ -26,16 +26,16 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
-fun CatchFrogScreen(modifier: Modifier = Modifier, size: Pair<Int, Int>, state: State<CatchFrogState>, caught: (Int) -> Unit, score: Int) {
+fun CatchFrogScreen(modifier: Modifier = Modifier, rows:Int, cols:Int, state: State<CatchFrogState>, caught: (Int) -> Unit, score: Int, replay: (Int, Int) -> Unit) {
     Column(modifier.verticalScroll(state = ScrollState(0))) {
         Row(modifier) {
             Text(text = "Time", modifier = modifier)
             Column(Modifier.weight(1f)) {}
-            Button(onClick = { replay() }, modifier = modifier) {
+            Button(onClick = { replay(rows,cols) }, modifier = modifier) {
                 Text(text = "play again")
             }
         }
-        CatchFrogsMatrix(columns = size.first, rows = size.second, state, caught)
+        CatchFrogsMatrix(columns = cols, rows = rows, state, caught)
         Row(modifier = modifier.padding(bottom = 30.dp)) {
             Text(text = "Score: $score")
             Column(Modifier.weight(1f)) {}
@@ -84,16 +84,12 @@ private fun caught(caught: (Int) -> Unit, i: Int): () -> Unit {
     return { caught(i) }
 }
 
-private fun replay() {
-    //TODO
-}
-
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
     val score = 345
     val state = MutableStateFlow(CatchFrogState.Running(2)).asStateFlow().collectAsState()
     FrogMainTheme {
-        CatchFrogScreen(size = 6 to 6, state = state, caught = { }, score = score)
+        CatchFrogScreen(rows = 6,cols= 6, state = state, caught = { }, score = score, replay = { _,_ -> })
     }
 }
