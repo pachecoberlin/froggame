@@ -32,7 +32,7 @@ fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogView
         }
 
         else -> {
-            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState, viewModel.caught)
+            CatchFrogScreen(modifier = modifier, viewModel.rows to viewModel.cols, gameState, viewModel.caughtFrog)
         }
     }
 

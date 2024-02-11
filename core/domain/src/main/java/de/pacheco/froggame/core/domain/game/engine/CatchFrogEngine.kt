@@ -1,13 +1,12 @@
 package de.pacheco.froggame.core.domain.game.engine
 
-import de.pacheco.froggame.core.data.repos.interfaces.ICatchFrogRepository
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import kotlin.random.Random
 
-class CatchFrogEngine @Inject constructor(private val catchFrogRepository: ICatchFrogRepository) : ICatchFrogEngine {
+class CatchFrogEngine @Inject constructor() : ICatchFrogEngine {
     private var frogCount: Int = 200
     private var actualScore: Int = 0
     private var delay: Long = 300L
@@ -32,5 +31,9 @@ class CatchFrogEngine @Inject constructor(private val catchFrogRepository: ICatc
     override suspend fun stopGame() {
         isStopped = true
         catchFrogRepository.stopGame(actualScore)
+    }
+
+    override suspend fun catchFrog(frogId: Int) {
+        updateScore(100)
     }
 }

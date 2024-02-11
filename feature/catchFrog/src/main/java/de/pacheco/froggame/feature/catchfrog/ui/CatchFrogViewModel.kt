@@ -3,6 +3,7 @@ package de.pacheco.froggame.feature.catchfrog.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import de.pacheco.froggame.core.domain.usecases.CatchFrogUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
 import kotlinx.coroutines.flow.SharingStarted
@@ -15,9 +16,10 @@ import javax.inject.Inject
 @HiltViewModel
 class CatchFrogViewModel @Inject constructor(
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
-    getCatchFrogStateUseCase: GetCatchFrogStateUseCase
+    getCatchFrogStateUseCase: GetCatchFrogStateUseCase,
+    catchFrogUseCase: CatchFrogUseCase,
 ) : ViewModel() {
-    val caught: (Int) -> Unit = { catchedFrog ->
+    val caughtFrog: (Int) -> Unit = { catchedFrog ->
         viewModelScope.launch {
             println(catchedFrog) //TODO implement
         }
