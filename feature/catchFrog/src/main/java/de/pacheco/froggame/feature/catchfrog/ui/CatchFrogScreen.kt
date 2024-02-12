@@ -1,5 +1,6 @@
 package de.pacheco.froggame.feature.catchfrog.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
@@ -12,8 +13,10 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -26,12 +29,22 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 @Composable
-fun CatchFrogScreen(modifier: Modifier = Modifier, rows:Int, cols:Int, state: State<CatchFrogState>, caught: (Int) -> Unit, score: Int, replay: (Int, Int) -> Unit) {
+fun CatchFrogScreen(
+    modifier: Modifier = Modifier,
+    rowsState: MutableIntState,
+    colsState: MutableIntState,
+    state: State<CatchFrogState>,
+    caught: (Int) -> Unit,
+    score: Int,
+    replay: (Int, Int) -> Unit
+) {
+    val rows = rowsState.intValue
+    val cols = colsState.intValue
     Column(modifier.verticalScroll(state = ScrollState(0))) {
         Row(modifier) {
             Text(text = "Time", modifier = modifier)
             Column(Modifier.weight(1f)) {}
-            Button(onClick = { replay(rows,cols) }, modifier = modifier) {
+            Button(onClick = { replay(rows, cols) }, modifier = modifier) {
                 Text(text = "play again")
             }
         }
@@ -84,12 +97,15 @@ private fun caught(caught: (Int) -> Unit, i: Int): () -> Unit {
     return { caught(i) }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
     val score = 345
-    val state = MutableStateFlow(CatchFrogState.Running(2)).asStateFlow().collectAsState()
+    val state = MutableStateFlow(CatchFrogState.Running(8)).asStateFlow().collectAsState()
+    val rowState = mutableIntStateOf(6)
+    val colState = mutableIntStateOf(4)
     FrogMainTheme {
-        CatchFrogScreen(rows = 6,cols= 6, state = state, caught = { }, score = score, replay = { _,_ -> })
+        CatchFrogScreen(rowsState = rowState, colsState = colState, state = state, caught = { }, score = score) { _, _ -> }
     }
 }

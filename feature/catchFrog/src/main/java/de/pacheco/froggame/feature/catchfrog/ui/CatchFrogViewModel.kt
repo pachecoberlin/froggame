@@ -31,13 +31,11 @@ class CatchFrogViewModel @Inject constructor(
     }
 
     private var oldValue: CatchFrogState = CatchFrogState.Preparation
-    var rows: Int = -1
-    var cols: Int = -1
 
     private val startGame: Pair<Function, (params: Map<Parameter, Any>) -> Unit> = Function.STARTGAME to { params ->
-        rows = params[Parameter.ROWS] as? Int ?: 1
-        cols = params[Parameter.COLS] as? Int ?: 1
-        startGame(rows,cols)
+        val rows = params[Parameter.ROWS] as? Int ?: 1
+        val cols = params[Parameter.COLS] as? Int ?: 1
+        startGame(rows, cols)
     }
 
     fun startGame(rows: Int, cols: Int) {
@@ -46,6 +44,10 @@ class CatchFrogViewModel @Inject constructor(
 
     val functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = mapOf(startGame)
 
+    /**
+     * Maybe we should have two StateFlows. One with the frogShowingUC and one which gives us the gamestate.
+     * This here might be to much of some logic in the presentation layer
+     */
     val gameState: StateFlow<CatchFrogState> = getCatchFrogStateUseCase()
         .combineTransform(getCatchFrogShowingUseCase()) { isRunning, frogShown ->
             if (isRunning) {

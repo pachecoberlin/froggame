@@ -1,19 +1,19 @@
 package de.pacheco.froggame.feature.catchfrog.ui
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
@@ -23,32 +23,36 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
     val gameState = viewModel.gameState.collectAsStateWithLifecycle()
     val score = viewModel.score.collectAsStateWithLifecycle()
+    val rowsState = remember { mutableIntStateOf(6) }
+    val colsState = remember { mutableIntStateOf(4) }
     when (gameState.value) {
         CatchFrogState.Preparation -> {
-            StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions)
+            StartCatchFrogScreenInternal(modifier = modifier, functions = viewModel.functions, rows = rowsState, cols = colsState)
         }
 
         else -> {
-            CatchFrogScreen(modifier = modifier, rows=viewModel.rows, cols=viewModel.cols, gameState, viewModel::caughtFrog, score.value, viewModel::startGame)
+            CatchFrogScreen(modifier = modifier, rowsState = rowsState, colsState = colsState, gameState, viewModel::caughtFrog, score.value, viewModel::startGame)
         }
     }
 
 }
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
-internal fun StartCatchFrogScreenInternal(modifier: Modifier = Modifier, functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = emptyMap()) {
+internal fun StartCatchFrogScreenInternal(
+    modifier: Modifier = Modifier,
+    functions: Map<Function, (params: Map<Parameter, Any>) -> Unit> = emptyMap(),
+    rows: MutableIntState,
+    cols: MutableIntState
+) {
     val modifiedModifier = modifier
         .padding(all = 30.dp)
         .fillMaxWidth()
-    //TODO row sand cols one up and pass it to catchfrogscreen directly
-    val rows: MutableIntState = mutableIntStateOf(6)
-    val cols: MutableIntState = mutableIntStateOf(4)
-    Column(modifier = modifiedModifier) {
+    Column(modifier = modifiedModifier.verticalScroll(state = ScrollState(0))) {
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.ROWS.text), rows)
         OutlinedTextField(modifier = modifiedModifier, label = stringResource(Parameter.COLS.text), cols)
         Button(modifier = modifiedModifier, onClick = startGame(functions[Function.STARTGAME], rows, cols)) {
@@ -82,22 +86,22 @@ fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableI
 }
 
 @Composable
-fun OutlinedTextField(modifier: Modifier = Modifier, label: String = "", mutableIntState: MutableIntState) {
-    var number by rememberSaveable { mutableIntState }
-
+fun OutlinedTextField(modifier: Modifier = Modifier, label: String = "", number: MutableIntState) {
     OutlinedTextField(
-        value = number.toString(),
-        onValueChange = { number = it.toIntOrNull() ?: number },
+        value = number.value.toString(),
+        onValueChange = { number.value = it.toIntOrNull() ?: number.value },
         label = { Text(label) },
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
     )
 }
 
+@SuppressLint("UnrememberedMutableState")
 @DevicePreviews
 @Composable
 private fun DefaultPreview() {
+    val mutableIntStateOf = mutableIntStateOf(6)
     FrogMainTheme {
-        StartCatchFrogScreenInternal()
+        StartCatchFrogScreenInternal(rows = mutableIntStateOf, cols = mutableIntStateOf)
     }
 }
