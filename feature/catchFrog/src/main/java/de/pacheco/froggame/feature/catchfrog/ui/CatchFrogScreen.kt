@@ -59,12 +59,14 @@ fun CatchFrogScreen(
 
 @Composable
 private fun CatchFrogsMatrix(columns: Int, rows: Int, state: State<CatchFrogState>, caught: (Int) -> Unit) {
-    val frogId = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing / columns else -1
+    val frogId = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing else -1
+    val column = frogId / rows
+    val row = frogId % rows
     Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
         Column(Modifier.weight(1f)) {}
         for (i in 0..<columns) {
             Column {
-                CatchableFrogsRows(rows, if (i == frogId) frogId else -1, caught, frogId)
+                CatchableFrogsRows(rows, if (i == column) row else -1, caught, frogId)
             }
             Column(Modifier.weight(1f)) {}
         }

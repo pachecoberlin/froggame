@@ -23,7 +23,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
 
-@SuppressLint("UnrememberedMutableState")
 @Composable
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
     val gameState = viewModel.gameState.collectAsStateWithLifecycle()
@@ -39,7 +38,6 @@ fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogView
             CatchFrogScreen(modifier = modifier, rowsState = rowsState, colsState = colsState, gameState, viewModel::caughtFrog, score.value, viewModel::startGame)
         }
     }
-
 }
 
 @Composable
@@ -88,8 +86,8 @@ fun startGame(function: ((params: Map<Parameter, Any>) -> Unit)?, rows: MutableI
 @Composable
 fun OutlinedTextField(modifier: Modifier = Modifier, label: String = "", number: MutableIntState) {
     OutlinedTextField(
-        value = number.value.toString(),
-        onValueChange = { number.value = it.toIntOrNull() ?: number.value },
+        value = number.intValue.toString(),
+        onValueChange = { number.intValue = it.toIntOrNull() ?: number.intValue },
         label = { Text(label) },
         modifier = modifier,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
