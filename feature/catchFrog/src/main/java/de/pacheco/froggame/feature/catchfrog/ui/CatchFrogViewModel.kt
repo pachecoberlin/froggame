@@ -4,7 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import de.pacheco.froggame.core.domain.usecases.CatchFrogUseCase
-import de.pacheco.froggame.core.domain.usecases.GetCatchFrogScore
+import de.pacheco.froggame.core.domain.usecases.GetCatchFrogHighScoreUseCase
+import de.pacheco.froggame.core.domain.usecases.GetCatchFrogScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogShowingUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
@@ -21,7 +22,9 @@ class CatchFrogViewModel @Inject constructor(
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase,
     getCatchFrogShowingUseCase: GetCatchFrogShowingUseCase,
-    getCatchFrogScore: GetCatchFrogScore,
+    getCatchFrogScoreUseCase: GetCatchFrogScoreUseCase,
+    getCatchFrogHighScoreUseCase: GetCatchFrogHighScoreUseCase,
+//    getCatchFrogTimeRemainingUseCase: GetCatchFrogTimeRemainingUseCase,
 ) : ViewModel() {
 
     fun caughtFrog(caughtFrog: Int) {
@@ -30,11 +33,13 @@ class CatchFrogViewModel @Inject constructor(
         }
     }
 
+    private var rows: Int = -1
+    private var cols: Int = -1
     private var oldValue: CatchFrogState = CatchFrogState.Preparation
 
     private val startGame: Pair<Function, (params: Map<Parameter, Any>) -> Unit> = Function.STARTGAME to { params ->
-        val rows = params[Parameter.ROWS] as? Int ?: 1
-        val cols = params[Parameter.COLS] as? Int ?: 1
+        rows = params[Parameter.ROWS] as? Int ?: 1
+        cols = params[Parameter.COLS] as? Int ?: 1
         startGame(rows, cols)
     }
 
@@ -65,7 +70,9 @@ class CatchFrogViewModel @Inject constructor(
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatchFrogState.Preparation)
 
-    val score: StateFlow<Int> = getCatchFrogScore().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val score: StateFlow<Int> = getCatchFrogScoreUseCase().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val highscore: StateFlow<Int> = getCatchFrogHighScoreUseCase(rows * cols).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+//    val time: StateFlow<Int> = getCatchFrogTimeRemainingUseCase().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 }
 
 

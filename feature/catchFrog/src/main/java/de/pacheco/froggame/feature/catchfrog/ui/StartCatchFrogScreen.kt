@@ -27,6 +27,8 @@ import de.pacheco.froggame.core.ui.FrogMainTheme
 fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogViewModel = hiltViewModel()) {
     val gameState = viewModel.gameState.collectAsStateWithLifecycle()
     val score = viewModel.score.collectAsStateWithLifecycle()
+    val highScore = viewModel.highscore.collectAsStateWithLifecycle()
+//    val time = viewModel.time.collectAsStateWithLifecycle()
     val rowsState = remember { mutableIntStateOf(6) }
     val colsState = remember { mutableIntStateOf(4) }
     when (gameState.value) {
@@ -35,7 +37,7 @@ fun StartCatchFrogScreen(modifier: Modifier = Modifier, viewModel: CatchFrogView
         }
 
         else -> {
-            CatchFrogScreen(modifier = modifier, rowsState = rowsState, colsState = colsState, gameState, viewModel::caughtFrog, score.value, viewModel::startGame)
+            CatchFrogScreen(modifier = modifier, rowsState = rowsState, colsState = colsState, gameState, viewModel::caughtFrog, score.value, viewModel::startGame, highScore.value)
         }
     }
 }

@@ -15,7 +15,7 @@ interface CatchFrogDao {
     suspend fun getCatchFrog(id: Long): CatchFrog
 
     @Query("SELECT * FROM catchfrog WHERE amount = :amount")
-    suspend fun getHighScoreByAmount(amount: Int): CatchFrog
+    fun getHighScoreByAmount(amount: Int): Flow<CatchFrog>
 
     @Insert
     suspend fun addCatchFrog(data: CatchFrog):Long
