@@ -8,5 +8,5 @@ data class CatchFrog(
     @PrimaryKey(autoGenerate = true)
     val uid: Long = 0,
     val amount: Int,
-    val highscore: Int,
+    val highScore: Int,
 )

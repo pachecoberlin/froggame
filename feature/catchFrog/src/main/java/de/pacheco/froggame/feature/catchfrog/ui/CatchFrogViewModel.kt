@@ -8,6 +8,7 @@ import de.pacheco.froggame.core.domain.usecases.GetCatchFrogHighScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogShowingUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
+import de.pacheco.froggame.core.domain.usecases.SaveScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -19,6 +20,7 @@ import javax.inject.Inject
 @HiltViewModel
 class CatchFrogViewModel @Inject constructor(
     private val catchFrogUseCase: CatchFrogUseCase,
+    private val saveScoreUseCase: SaveScoreUseCase,
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase,
     getCatchFrogShowingUseCase: GetCatchFrogShowingUseCase,
@@ -62,6 +64,7 @@ class CatchFrogViewModel @Inject constructor(
                 if (oldValue is CatchFrogState.Running) {
                     oldValue = CatchFrogState.GameOver
                     emit(oldValue)
+                    viewModelScope.launch { saveScoreUseCase.invoke(score.value,rows * cols)}
                 } else {
                     oldValue = CatchFrogState.Preparation
                     emit(oldValue)
