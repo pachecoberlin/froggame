@@ -1,4 +1,4 @@
-package de.pacheco.froggame.core.domain.usecases
+package de.pacheco.froggame.core.domain.usecases.catchfrog
 
 import de.pacheco.froggame.core.data.repos.interfaces.ICatchFrogRepository
 import kotlinx.coroutines.flow.Flow
