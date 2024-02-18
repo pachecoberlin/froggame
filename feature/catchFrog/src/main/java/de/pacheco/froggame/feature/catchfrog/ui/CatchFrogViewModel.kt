@@ -8,6 +8,7 @@ import de.pacheco.froggame.core.domain.usecases.GetCatchFrogHighScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogShowingUseCase
 import de.pacheco.froggame.core.domain.usecases.GetCatchFrogStateUseCase
+import de.pacheco.froggame.core.domain.usecases.GetCatchFrogTimeRemainingUseCase
 import de.pacheco.froggame.core.domain.usecases.SaveScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.StartCatchFrogUseCase
 import kotlinx.coroutines.flow.SharingStarted
@@ -26,7 +27,7 @@ class CatchFrogViewModel @Inject constructor(
     getCatchFrogShowingUseCase: GetCatchFrogShowingUseCase,
     getCatchFrogScoreUseCase: GetCatchFrogScoreUseCase,
     getCatchFrogHighScoreUseCase: GetCatchFrogHighScoreUseCase,
-//    getCatchFrogTimeRemainingUseCase: GetCatchFrogTimeRemainingUseCase,
+    getCatchFrogTimeRemainingUseCase: GetCatchFrogTimeRemainingUseCase,
 ) : ViewModel() {
 
     fun caughtFrog(caughtFrog: Int) {
@@ -74,8 +75,8 @@ class CatchFrogViewModel @Inject constructor(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), CatchFrogState.Preparation)
 
     val score: StateFlow<Int> = getCatchFrogScoreUseCase().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
-    val highscore: StateFlow<Int> = getCatchFrogHighScoreUseCase(rows * cols).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
-//    val time: StateFlow<Int> = getCatchFrogTimeRemainingUseCase().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val highScore: StateFlow<Int> = getCatchFrogHighScoreUseCase(rows * cols).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
+    val time: StateFlow<Int> = getCatchFrogTimeRemainingUseCase().stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), 0)
 }
 
 

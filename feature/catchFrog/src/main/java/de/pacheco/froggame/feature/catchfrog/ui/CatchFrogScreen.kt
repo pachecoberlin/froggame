@@ -37,13 +37,14 @@ fun CatchFrogScreen(
     caught: (Int) -> Unit,
     score: Int,
     replay: (Int, Int) -> Unit,
-    highScore: Int
+    highScore: Int,
+    time: Int
 ) {
     val rows = rowsState.intValue
     val cols = colsState.intValue
     Column(modifier.verticalScroll(state = ScrollState(0))) {
         Row(modifier) {
-            Text(text = "Time", modifier = modifier)
+            Text(text = "$time s", modifier = modifier)
             Column(Modifier.weight(1f)) {}
             Button(onClick = { replay(rows, cols) }, modifier = modifier.alpha(if (state.value is CatchFrogState.GameOver) 1f else 0f)) {
                 Text(text = "play again")
@@ -105,10 +106,11 @@ private fun caught(caught: (Int) -> Unit, i: Int): () -> Unit {
 @Composable
 private fun DefaultPreview() {
     val score = 345
+    val time = 3
     val state = MutableStateFlow(CatchFrogState.Running(8)).asStateFlow().collectAsState()
     val rowState = mutableIntStateOf(6)
     val colState = mutableIntStateOf(4)
     FrogMainTheme {
-        CatchFrogScreen(rowsState = rowState, colsState = colState, state = state, caught = { }, score = score, replay = { _, _ -> }, highScore = score)
+        CatchFrogScreen(rowsState = rowState, colsState = colState, state = state, caught = { }, score = score, replay = { _, _ -> }, highScore = score, time = time)
     }
 }
