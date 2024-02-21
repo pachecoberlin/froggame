@@ -87,6 +87,7 @@ dependencies {
 
     implementation(projects.core.ressources)
     implementation(projects.core.ui)
+    implementation(projects.core.data)
     implementation(projects.feature.frogdata)
     implementation(projects.feature.catchFrog)
 

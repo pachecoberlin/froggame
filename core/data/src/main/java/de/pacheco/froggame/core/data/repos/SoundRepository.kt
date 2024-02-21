@@ -8,7 +8,23 @@ import de.pacheco.froggame.core.ressources.R
 import javax.inject.Inject
 
 class SoundRepository @Inject constructor(@ApplicationContext private val context: Context) : ISoundRepository {
+    private val players = hashMapOf<Int, MediaPlayer?>()
+
+    private fun getPlayer(soundResId: Int): MediaPlayer? {
+        if (players[soundResId] == null) {
+            players[soundResId] = MediaPlayer.create(context, soundResId)
+        }
+        return players[soundResId]
+    }
+
     override fun playSplat() {
-        MediaPlayer.create(context, R.raw.splat).start()
+        getPlayer(R.raw.splat)?.start()
+    }
+
+    override fun releasePlayers() {
+        players.values.forEach {
+            it?.release()
+        }
+        players.clear()
     }
 }
