@@ -11,6 +11,7 @@ import de.pacheco.froggame.core.domain.usecases.catchfrog.GetCatchFrogStateUseCa
 import de.pacheco.froggame.core.domain.usecases.catchfrog.GetCatchFrogTimeRemainingUseCase
 import de.pacheco.froggame.core.domain.usecases.catchfrog.SaveScoreUseCase
 import de.pacheco.froggame.core.domain.usecases.catchfrog.StartCatchFrogUseCase
+import de.pacheco.froggame.core.domain.usecases.sounds.SplatSoundUseCase
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combineTransform
@@ -22,6 +23,7 @@ import javax.inject.Inject
 class CatchFrogViewModel @Inject constructor(
     private val catchFrogUseCase: CatchFrogUseCase,
     private val saveScoreUseCase: SaveScoreUseCase,
+    private val splatSoundUseCase: SplatSoundUseCase,
     private val startCatchFrogUseCase: StartCatchFrogUseCase,
     getCatchFrogStateUseCase: GetCatchFrogStateUseCase,
     getCatchFrogShowingUseCase: GetCatchFrogShowingUseCase,
@@ -32,6 +34,7 @@ class CatchFrogViewModel @Inject constructor(
 
     fun caughtFrog(caughtFrog: Int) {
         viewModelScope.launch {
+            splatSoundUseCase()
             catchFrogUseCase(caughtFrog)
         }
     }
