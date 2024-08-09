@@ -5,9 +5,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -16,7 +18,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableIntState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
@@ -27,6 +33,7 @@ import de.pacheco.froggame.core.ui.DevicePreviews
 import de.pacheco.froggame.core.ui.FrogMainTheme
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+
 
 @Composable
 fun CatchFrogScreen(
@@ -64,7 +71,9 @@ private fun CatchFrogsMatrix(columns: Int, rows: Int, state: State<CatchFrogStat
     val frogId = if (state.value is CatchFrogState.Running) (state.value as CatchFrogState.Running).frogIsShowing else -1
     val column = frogId / rows
     val row = frogId % rows
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Center) {
+    Row(
+        modifier = Modifier.fillMaxWidth().width(IntrinsicSize.Max),
+        horizontalArrangement = Arrangement.Center) {
         Column(Modifier.weight(1f)) {}
         for (i in 0..<columns) {
             Column {
@@ -86,19 +95,27 @@ private fun CatchableFrogsRows(rows: Int, showing: Int, caught: (Int) -> Unit, f
 
 @Composable
 fun CatchableFrog(isVisible: Boolean, caught: (Int) -> Unit, i: Int) {
+    var isSplashed by remember { mutableStateOf(false) }
+    var wasVisible by remember { mutableStateOf(false) }
     Button(
-        onClick = caught(caught, i),
+        onClick = {
+            caught(i)
+            isSplashed = true
+        },
         border = null,
         enabled = isVisible,
         elevation = null,
         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent, disabledContainerColor = Color.Transparent),
     ) {
-        Image(modifier = Modifier.alpha(if (isVisible) 1f else 0f), painter = painterResource(id = R.drawable.frog), contentDescription = "a frog to catch")
+        Image(
+            modifier = Modifier.alpha(if (isVisible) 1f else 1f),
+            painter = if (isSplashed) painterResource(id = R.drawable.red_splash) else painterResource(id = R.drawable.frog),
+            contentDescription = "a frog to " +
+                    "catch"
+        )
     }
-}
-
-private fun caught(caught: (Int) -> Unit, i: Int): () -> Unit {
-    return { caught(i) }
+    if (wasVisible && isSplashed) isSplashed = false
+    wasVisible = isVisible
 }
 
 @SuppressLint("UnrememberedMutableState")
@@ -109,7 +126,7 @@ private fun DefaultPreview() {
     val time = 3
     val state = MutableStateFlow(CatchFrogState.Running(8)).asStateFlow().collectAsState()
     val rowState = mutableIntStateOf(6)
-    val colState = mutableIntStateOf(4)
+    val colState = mutableIntStateOf(10)
     FrogMainTheme {
         CatchFrogScreen(rowsState = rowState, colsState = colState, state = state, caught = { }, score = score, replay = { _, _ -> }, highScore = score, time = time)
     }
