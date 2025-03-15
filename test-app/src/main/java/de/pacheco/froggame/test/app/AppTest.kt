@@ -22,7 +22,7 @@ import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest
 import org.junit.Rule
 import org.junit.Test
-import de.pacheco.froggame.core.data.di.fakeFrogDatas
+import de.pacheco.froggame.core.data.repos.fakeFrogDatas
 import de.pacheco.froggame.ui.MainActivity
 
 @HiltAndroidTest
