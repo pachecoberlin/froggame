@@ -9,27 +9,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import de.pacheco.froggame.R
-import de.pacheco.froggame.core.ressources.R.string
 import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
-import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
 import de.pacheco.froggame.ui.components.GameButton
+import de.pacheco.froggame.viewmodel.MainViewModel
 
 @Composable
 fun MainNavigation() {
     val navController = rememberNavController()
-    val newGame = stringResource(string.newGame)
-    val mainMenu = stringResource(string.mainMenu)
-    val startCatchFrogs = stringResource(string.startCatchFrogs)
-    val options = stringResource(id = string.options)
-    NavHost(navController = navController, startDestination = mainMenu) {
-        composable(mainMenu) { MainMenu(navController) }
-        composable(newGame) { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
-        composable(route = startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
+    val strings = hiltViewModel<MainViewModel>().stringRepository
+    NavHost(navController = navController, startDestination = strings.mainMenu) {
+        composable(strings.mainMenu) { MainMenu(navController) }
+        composable(strings.newGame) { TutorialScreen() }
+        composable(strings.saveLoad) { SaveLoadScreen() }
+        composable(strings.options) { OptionsScreen() }
+        composable(strings.startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
         // TODO: Add more destinations
     }
 }
@@ -40,7 +39,6 @@ fun MainMenu(navController: NavHostController) {
         modifier = Modifier.fillMaxSize()
     ) {
 //        padding ->
-
         Image(
             painter = painterResource(id = R.drawable.background_fantasy),
             contentDescription = null,
@@ -52,24 +50,23 @@ fun MainMenu(navController: NavHostController) {
             modifier = Modifier.fillMaxSize()
 //                .consumeWindowInsets(padding)
         ) {
+            val strings = hiltViewModel<MainViewModel>().stringRepository
             Text(
                 text = stringResource(id = R.string.app_name),
                 style = MaterialTheme.typography.titleLarge
             )
             Spacer(modifier = Modifier.height(16.dp))
-
-
-            val newGame = stringResource(string.newGame)
+            val newGame = strings.newGame
             GameButton(text = newGame) {
                 navController.navigate(newGame)
             }
-            GameButton(text = stringResource(id = string.save)) {
-                // Navigate to SaveLoadScreen
+            GameButton(text = strings.save) {
+                navController.navigate(strings.saveLoad)
             }
-            GameButton(text = stringResource(id = string.load)) {
-                // Navigate to SaveLoadScreen
+            GameButton(text = strings.load) {
+                navController.navigate(strings.saveLoad)
             }
-            val options = stringResource(id = string.options)
+            val options = strings.options
             GameButton(text = options) {
                 navController.navigate(options)
             }

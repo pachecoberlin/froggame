@@ -3,5 +3,7 @@
     <string name="catchFrogs">Catch Frogs</string>
     <string name="newGame">New Game</string>
     <string name="mainMenu">Main Menu</string>
+    <string name="saveLoad">Save Load</string>
+    <string name="options">Options</string>
     <string name="startCatchFrogs">Start Catch Frogs</string>
 </resources>
