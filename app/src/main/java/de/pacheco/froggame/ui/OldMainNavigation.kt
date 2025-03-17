@@ -1,7 +1,5 @@
 package de.pacheco.froggame.ui
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
@@ -22,7 +20,6 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -34,7 +31,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.pacheco.froggame.core.ressources.R.string
 import de.pacheco.froggame.core.ressources.R.string.newGame
 import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
 import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
@@ -42,7 +38,7 @@ import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
 import de.pacheco.froggame.ui.components.GameButton
 
 @Composable
-fun MainNavigation() {
+fun MainTest() {
     val navController = rememberNavController()
 //    OldMainNavigation(navController)
     Test(navController)
@@ -54,7 +50,7 @@ fun Test(navController: NavHostController) {
         composable("screen1") { Screen1(navController) }
         composable("screen2") { Screen2(navController) }
         composable("New Game") { TutorialScreen() }
-        composable("main") { MainScreen() }
+        composable("main") { MainNavigation() }
     }
 }
 

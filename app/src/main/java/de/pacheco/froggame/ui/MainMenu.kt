@@ -9,32 +9,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import de.pacheco.froggame.ui.components.GameButton
-import de.pacheco.froggame.core.ressources.R.string
 import de.pacheco.froggame.R
-import de.pacheco.froggame.core.ressources.R.string.startCatchFrogs
+import de.pacheco.froggame.core.ressources.R.string
 import de.pacheco.froggame.feature.catchfrog.ui.StartCatchFrogScreen
 import de.pacheco.froggame.feature.frogdata.ui.FrogDataScreen
+import de.pacheco.froggame.ui.components.GameButton
 
 @Composable
-fun MainScreen() {
+fun MainNavigation() {
     val navController = rememberNavController()
-    val main = stringResource(string.newGame)
-    val startCatchFrogs = stringResource(startCatchFrogs)
-    NavHost(navController = navController, startDestination = main) {
-        composable(main) { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
+    val newGame = stringResource(string.newGame)
+    val mainMenu = stringResource(string.mainMenu)
+    val startCatchFrogs = stringResource(string.startCatchFrogs)
+    val options = stringResource(id = string.options)
+    NavHost(navController = navController, startDestination = mainMenu) {
+        composable(mainMenu) { MainMenu(navController) }
+        composable(newGame) { FrogDataScreen(modifier = Modifier.padding(16.dp)) }
         composable(route = startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
         // TODO: Add more destinations
     }
+}
+
+@Composable
+fun MainMenu(navController: NavHostController) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
 //        padding ->
 
-    Image(
+        Image(
             painter = painterResource(id = R.drawable.background_fantasy),
             contentDescription = null,
             modifier = Modifier.fillMaxSize()
@@ -52,8 +59,9 @@ fun MainScreen() {
             Spacer(modifier = Modifier.height(16.dp))
 
 
-            GameButton(text = stringResource(id = string.newGame)) {
-                navController.navigate(main)
+            val newGame = stringResource(string.newGame)
+            GameButton(text = newGame) {
+                navController.navigate(newGame)
             }
             GameButton(text = stringResource(id = string.save)) {
                 // Navigate to SaveLoadScreen
@@ -61,10 +69,10 @@ fun MainScreen() {
             GameButton(text = stringResource(id = string.load)) {
                 // Navigate to SaveLoadScreen
             }
-            GameButton(text = stringResource(id = string.options)) {
-                navController.navigate(startCatchFrogs)
+            val options = stringResource(id = string.options)
+            GameButton(text = options) {
+                navController.navigate(options)
             }
-
         }
     }
 }
