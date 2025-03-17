@@ -3,4 +3,9 @@
     <string name="columns">Columns</string>
     <string name="rows">Rows</string>
     <string name="startGameNow">Start Game Now</string>
+<!--    <string name="new_game">New Game</string>-->
+    <string name="save">Save</string>
+    <string name="load">Load</string>
+    <string name="options">Options</string>
+    <string name="tutorial_text">You awake in a room full of dead people...</string>
 </resources>

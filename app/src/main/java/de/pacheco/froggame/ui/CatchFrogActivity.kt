@@ -12,6 +12,7 @@ import de.pacheco.froggame.databinding.ActivityCatchfrogBinding
 import java.util.*
 import kotlin.collections.ArrayList
 
+/** Old and unused**/
 class CatchFrogActivity : AppCompatActivity() {
     var score: Int = 0
     var highscore: Int = 0

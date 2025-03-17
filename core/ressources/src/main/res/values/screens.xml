@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="catchFrogs">catchFrogs</string>
-    <string name="main">main</string>
-    <string name="startCatchFrogs">startCatchFrogs</string>
+    <string name="catchFrogs">Catch Frogs</string>
+    <string name="newGame">New Game</string>
+    <string name="startCatchFrogs">Start Catch Frogs</string>
 </resources>
