@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -29,7 +30,6 @@ fun MainNavigation() {
         composable(strings.saveLoad) { SaveLoadScreen() }
         composable(strings.options) { OptionsScreen() }
         composable(strings.startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
-        // TODO: Add more destinations
     }
 }
 
@@ -41,7 +41,8 @@ fun MainMenu(navController: NavHostController) {
 //        padding ->
         Image(
             painter = painterResource(id = R.drawable.background_fantasy),
-            contentDescription = null,
+            contentDescription = "A wonderful fantasy world with dragons, rivers and mountains",
+            contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize()
         )
         Column(
@@ -52,7 +53,7 @@ fun MainMenu(navController: NavHostController) {
         ) {
             val strings = hiltViewModel<MainViewModel>().stringRepository
             Text(
-                text = stringResource(id = R.string.app_name),
+                text = stringResource(id = R.string.app_name).uppercase(),
                 style = MaterialTheme.typography.titleLarge
             )
             Spacer(modifier = Modifier.height(16.dp))
