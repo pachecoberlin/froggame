@@ -49,7 +49,7 @@ fun Test(navController: NavHostController) {
     NavHost(navController, startDestination = "screen1") {
         composable("screen1") { Screen1(navController) }
         composable("screen2") { Screen2(navController) }
-        composable("New Game") { TutorialScreen() }
+        composable("New Game") { TutorialScreen(navController) }
         composable("main") { MainNavigation() }
     }
 }

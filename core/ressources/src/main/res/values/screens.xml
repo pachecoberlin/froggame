@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="catchFrogs">Catch Frogs</string>
-    <string name="newGame">New Game</string>
+    <string name="game">Game</string>
     <string name="mainMenu">Main Menu</string>
-    <string name="saveLoad">Save Load</string>
+    <string name="newGame">New Game</string>
     <string name="options">Options</string>
+    <string name="saveLoad">Save Load</string>
+    <string name="skip">Skip</string>
     <string name="startCatchFrogs">Start Catch Frogs</string>
 </resources>

@@ -25,10 +25,11 @@ fun MainNavigation() {
     val navController = rememberNavController()
     val strings = hiltViewModel<MainViewModel>().stringRepository
     NavHost(navController = navController, startDestination = strings.mainMenu) {
+        composable(strings.game) { GameScreen() }
         composable(strings.mainMenu) { MainMenu(navController) }
-        composable(strings.newGame) { TutorialScreen() }
-        composable(strings.saveLoad) { SaveLoadScreen() }
+        composable(strings.newGame) { TutorialScreen(navController) }
         composable(strings.options) { OptionsScreen() }
+        composable(strings.saveLoad) { SaveLoadScreen() }
         composable(strings.startCatchFrogs) { StartCatchFrogScreen(modifier = Modifier.padding(20.dp)) }
     }
 }
